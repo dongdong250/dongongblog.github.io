@@ -1,0 +1,73 @@
+## 主题配置文件，图片路径都是在主题文件夹下的source文件夹下
+### 额外的<head>标签内插入内容，你可能会需要插入一些第三方的js库，例如统计代码等
+favicon:
+  src: images/wang.icon
+head:
+  '<script>
+  console.log("Hello hexo-theme-wang");
+  </script>'
+
+## 头像配置
+avatar:
+  src: images/avatar.webp #头像路径
+  isround: true #是否是圆形
+
+## 导航栏菜单 用 || 隔开，前面是菜单名称，后面是图标名称，位置在source/images/menu_ico
+menu:
+  Home: / ||home
+  Archives: /archives ||archives
+  Categories: /categories || categories
+  Tags: /tags || tags
+  About: /about || about
+  Links: /links || links
+  RSS: /atom.xml || rss                   ##需要安装 hexo-generator-feed
+  Travelling: https://www.travellings.cn/go.html || train
+
+## 展示社交媒体链接 前面是名称，后面是图标名称 位置在source/images/social_links
+social_links:
+  Github: https://github.com/dongdong250 || github
+  Email: liuzhendong985@gmail.com || envelope
+
+
+  # 需要安装hexo-generator-searchdb
+search:
+  enable: true # 是否启用搜索功能
+  path: /search.xml # 添加前导斜杠，表示从网站根目录开始
+  field: post # 可选值: post | page | all
+  content: true # 是否搜索文章内容
+
+## 时间是否显示秒
+time:
+  show_seconds: true
+
+## 首页动态文字配置
+typed_text:
+  enable: true # 是否启用首页中间的动态打字效果区域
+
+## Waline评论,需要设置serverURL，详情请访问Waline官网:https://waline.js.org
+comments:
+  enable: false # 是否启用评论功能
+  serverURL: ''
+
+## 友链,需要设置name，link，img，description
+friend_links:
+    - name: zhendong
+      link: https://zhendong.gay/
+      img: https://i.ibb.co/vLC0cft/202406212107148.jpg
+      description: zhendong
+    - name:
+      link:
+      img:
+      description:
+
+## 底部链接,需要设置name，link，img
+footer_links:
+  - name: 测试
+    link: https://www.travellings.cn/go.html
+    img: https://www.travellings.cn/assets/logo.gif
+
+## 底部文字链接,需要设置name，link
+footer_links_text:
+  - name: 文字链接
+    link:
+
