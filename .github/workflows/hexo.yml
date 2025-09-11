@@ -1,0 +1,66 @@
+name: Build and Deploy Hexo to GitHub Pages
+
+on:
+  push:
+    branches: [ "main" ]   # 如你的源码分支不是 main，请改为对应分支
+  workflow_dispatch:
+
+# GitHub Pages 部署所需权限
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 避免并发部署相互覆盖
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive   # 若主题以 git submodule 方式引入，这样会自动拉取
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"            # 基于 package-lock.json 的 npm 缓存
+
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
+      - name: Build Hexo site
+        env:
+          HEXO_ENV: production
+        run: |
+          npx hexo clean
+          npx hexo generate        # 生成到 ./public
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public           # Hexo 构建输出目录
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
