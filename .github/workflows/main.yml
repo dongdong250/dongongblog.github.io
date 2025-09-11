@@ -1,0 +1,52 @@
+
+# .github/workflows/deploy.yml
+
+name: Build and Deploy Hexo Blog
+
+# 触发条件：当推送到 source 分支时触发
+on:
+  push:
+    branches:
+      - source # 确保这里的分支名和你存放源文件的分支一致
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest # 使用最新的 Ubuntu 环境
+
+    steps:
+      # 步骤 1: 检出你的仓库代码
+      - name: Checkout
+        uses: actions/checkout@v4
+        # 如果你的主题是作为 git submodule 安装的，需要添加以下配置
+        # with:
+        #   submodules: true
+
+      # 步骤 2: 设置 Node.js 环境
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # 推荐使用一个较新的 LTS 版本
+          cache: 'npm' # 缓存 npm 依赖，加快后续构建速度
+
+      # 步骤 3: 安装 Hexo 依赖
+      - name: Install Dependencies
+        run: |
+          npm install hexo-cli -g
+          npm install
+
+      # 步骤 4: 生成静态文件
+      - name: Generate Static Files
+        run: hexo generate
+
+      # 步骤 5: 部署到 gh-pages 分支
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4 # 使用一个专门用于部署的 Action
+        with:
+          # 这个 GITHUB_TOKEN 是由 GitHub Actions 自动提供的，用于授权推送到你的仓库
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # Hexo 生成的静态文件默认放在 public 目录
+          publish_dir: ./public
+          # 部署的目标分支
+          publish_branch: gh-pages
+          # 如果你有自定义域名，请取消下面一行的注释，并替换为你的域名
+          # cname: your-domain.com
