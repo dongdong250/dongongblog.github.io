@@ -1,52 +1,66 @@
+name: Build and Deploy Hexo to GitHub Pages
 
-# .github/workflows/deploy.yml
-
-name: Build and Deploy Hexo Blog
-
-# 触发条件：当推送到 source 分支时触发
 on:
   push:
-    branches:
-      - source # 确保这里的分支名和你存放源文件的分支一致
+    branches: [ "main" ]   # 如你的源码分支不是 main，请改为对应分支
+  workflow_dispatch:
+
+# GitHub Pages 部署所需权限
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 避免并发部署相互覆盖
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest # 使用最新的 Ubuntu 环境
-
+  build:
+    runs-on: ubuntu-latest
     steps:
-      # 步骤 1: 检出你的仓库代码
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
-        # 如果你的主题是作为 git submodule 安装的，需要添加以下配置
-        # with:
-        #   submodules: true
+        with:
+          submodules: recursive   # 若主题以 git submodule 方式引入，这样会自动拉取
 
-      # 步骤 2: 设置 Node.js 环境
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # 推荐使用一个较新的 LTS 版本
-          cache: 'npm' # 缓存 npm 依赖，加快后续构建速度
+          node-version: 20
+          cache: "npm"            # 基于 package-lock.json 的 npm 缓存
 
-      # 步骤 3: 安装 Hexo 依赖
-      - name: Install Dependencies
+      - name: Install dependencies
         run: |
-          npm install hexo-cli -g
-          npm install
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
 
-      # 步骤 4: 生成静态文件
-      - name: Generate Static Files
-        run: hexo generate
+      - name: Build Hexo site
+        env:
+          HEXO_ENV: production
+        run: |
+          npx hexo clean
+          npx hexo generate        # 生成到 ./public
 
-      # 步骤 5: 部署到 gh-pages 分支
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4 # 使用一个专门用于部署的 Action
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          # 这个 GITHUB_TOKEN 是由 GitHub Actions 自动提供的，用于授权推送到你的仓库
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          # Hexo 生成的静态文件默认放在 public 目录
-          publish_dir: ./public
-          # 部署的目标分支
-          publish_branch: gh-pages
-          # 如果你有自定义域名，请取消下面一行的注释，并替换为你的域名
-          # cname: your-domain.com
+          path: ./public           # Hexo 构建输出目录
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

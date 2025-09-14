@@ -4,12 +4,12 @@ favicon:
   src: images/wang.icon
 head:
   '<script>
-  console.log("Hello hexo-theme-wang");
+  console.log("Hello zhendong");
   </script>'
 
 ## 头像配置
 avatar:
-  src: images/avatar.webp #头像路径
+  src: images/国民男神.jpeg #头像路径
   isround: true #是否是圆形
 
 ## 导航栏菜单 用 || 隔开，前面是菜单名称，后面是图标名称，位置在source/images/menu_ico
@@ -41,7 +41,7 @@ time:
   show_seconds: true
 
 ## 首页动态文字配置
-typed_text:
+typed_text: 曾俊涵我爱你
   enable: true # 是否启用首页中间的动态打字效果区域
 
 ## Waline评论,需要设置serverURL，详情请访问Waline官网:https://waline.js.org
