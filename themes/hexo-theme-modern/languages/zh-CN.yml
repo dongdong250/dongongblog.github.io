@@ -1,0 +1,14 @@
+nav:
+  home: 首页
+  archives: 归档
+  about: 关于
+
+post:
+  read_more: 阅读全文
+  toc: 文章目录
+  author: 作者
+  date: 发布于
+
+footer:
+  powered_by: 驱动
+  theme: 主题

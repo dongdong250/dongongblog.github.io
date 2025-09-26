@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="<%= page.lang %>">
+
+<%- partial('_partial/head') %>
+
+<body>
+  <div class="container">
+    <%- partial('_partial/nav') %>
+    <main class="main-content">
+      <%- body %>
+    </main>
+    <%- partial('_partial/footer') %>
+  </div>
+  <%- partial('_partial/scripts') %>
+</body>
+</html>

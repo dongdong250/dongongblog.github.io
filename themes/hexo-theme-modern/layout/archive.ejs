@@ -1,0 +1,11 @@
+<h1 class="archive-title"><%= page.archive ? __('nav.archives') : page.title %></h1>
+
+<div class="post-list">
+  <% page.posts.each(function(post){ %>
+    <%- partial('_partial/article-summary', { post: post }) %>
+  <% }); %>
+</div>
+
+<% if (page.total > 1) { %>
+  <%- partial('_partial/pagination', { page: page }) %>
+<% } %>

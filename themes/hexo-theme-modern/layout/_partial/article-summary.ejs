@@ -1,0 +1,27 @@
+<article class="article-summary">
+  <% if (post.thumbnail) { %>
+    <div class="article-thumbnail">
+      <a href="<%- url_for(post.path) %>">
+        <img src="<%- url_for(post.thumbnail) %>" alt="<%= post.title %>">
+      </a>
+    </div>
+  <% } %>
+  <div class="article-details">
+    <h2 class="article-title">
+      <a href="<%- url_for(post.path) %>"><%= post.title %></a>
+    </h2>
+    <div class="article-meta">
+      <span class="article-date"><%= __('post.date') %>: <%= date(post.date, config.date_format) %></span>
+    </div>
+    <div class="article-excerpt">
+      <% if (post.excerpt) { %>
+        <%- post.excerpt %>
+      <% } else { %>
+        <%- truncate(strip_html(post.content), { length: 150 }) %>
+      <% } %>
+    </div>
+    <div class="read-more">
+      <a href="<%- url_for(post.path) %>"><%= __('post.read_more') %></a>
+    </div>
+  </div>
+</article>

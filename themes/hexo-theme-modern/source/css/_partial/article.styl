@@ -1,0 +1,77 @@
+// Styles for articles (summary and full post)
+
+// Article Summary (in lists)
+.article-summary
+  display: flex
+  gap: 2rem
+  margin-bottom: 3rem
+  padding-bottom: 3rem
+  border-bottom: 1px solid var(--border-color, #e9ecef)
+
+  html.dark &
+    --border-color: #3a3a3a
+
+  &:last-child
+    border-bottom: none
+
+.article-thumbnail
+  flex: 0 0 250px
+  overflow: hidden
+  border-radius: 8px
+  img
+    width: 100%
+    height: 100%
+    object-fit: cover
+    transition: transform 0.3s ease
+    &:hover
+      transform: scale(1.05)
+
+.article-details
+  flex: 1
+
+.article-title a
+  color: var(--text-color)
+  &:hover
+    color: var(--link-color)
+    text-decoration: none
+
+.article-meta
+  font-size: 0.9rem
+  color: var(--footer-text-color)
+  margin-bottom: 1rem
+
+.article-excerpt
+  margin-bottom: 1rem
+
+.read-more a
+  font-weight: bold
+
+// Full Post View
+.post-layout
+  display: flex
+  gap: 2rem
+
+.post-content
+  flex: 1
+  min-width: 0 // Prevents flexbox overflow
+
+.post-header .article-title
+  margin-bottom: 0.5rem
+
+.post-content .article-meta
+  margin-bottom: 2rem
+
+.post-content-main
+  h1, h2, h3, h4, h5, h6
+    font-weight: bold
+  img
+    border-radius: 8px
+
+// Responsive adjustments
+@media (max-width: 768px)
+  .article-summary
+    flex-direction: column
+    gap: 1.5rem
+  .article-thumbnail
+    flex-basis: auto
+    height: 200px

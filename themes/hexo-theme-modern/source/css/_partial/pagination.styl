@@ -1,0 +1,31 @@
+// Pagination styles
+
+.pagination
+  margin-top: 3rem
+  text-align: center
+
+  .page-number, .extend
+    display: inline-block
+    padding: 0.5rem 1rem
+    margin: 0 0.25rem
+    border-radius: 4px
+    color: var(--link-color)
+    border: 1px solid var(--border-color, #dee2e6)
+    transition: transition-fast
+
+    html.dark &
+      --border-color: #444
+
+    &:hover
+      background-color: var(--link-color)
+      color: #fff
+      border-color: var(--link-color)
+      text-decoration: none
+
+  .current
+    background-color: var(--link-color)
+    color: #fff
+    border-color: var(--link-color)
+
+  .space
+    color: var(--text-color)

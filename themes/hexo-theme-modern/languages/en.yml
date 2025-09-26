@@ -1,0 +1,14 @@
+nav:
+  home: Home
+  archives: Archives
+  about: About
+
+post:
+  read_more: Read More
+  toc: Table of Contents
+  author: Author
+  date: Published on
+
+footer:
+  powered_by: Powered by
+  theme: Theme

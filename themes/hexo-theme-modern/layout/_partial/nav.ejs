@@ -1,0 +1,15 @@
+<header class="header">
+  <div class="logo-container">
+    <a href="<%- url_for('/') %>" class="logo-link">
+      <% if (theme.avatar) { %>
+        <img src="<%- url_for(theme.avatar) %>" alt="Avatar" class="logo-avatar">
+      <% } %>
+      <span class="site-title"><%= config.title %></span>
+    </a>
+  </div>
+  <nav class="nav-menu">
+    <% for (let i in theme.menu) { %>
+      <a href="<%- url_for(theme.menu[i]) %>" class="nav-link"><%= __(i) %></a>
+    <% } %>
+  </nav>
+</header>

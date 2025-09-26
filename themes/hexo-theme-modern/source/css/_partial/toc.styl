@@ -1,0 +1,56 @@
+// Table of Contents (TOC) styles
+
+.toc-aside
+  flex: 0 0 250px
+  order: 2 // Puts TOC on the right
+
+.toc-widget
+  position: sticky
+  top: 2rem
+  background: var(--code-bg)
+  padding: 1rem
+  border-radius: 8px
+  max-height: calc(100vh - 4rem)
+  overflow-y: auto
+
+.toc-title
+  font-size: 1.2rem
+  margin-top: 0
+  margin-bottom: 1rem
+  border-bottom: 1px solid var(--border-color, #ccc)
+  padding-bottom: 0.5rem
+
+  html.dark &
+    --border-color: #555
+
+.toc-content
+  .toc
+    padding-left: 0
+    list-style: none
+
+  .toc-item
+    margin-bottom: 0.5rem
+
+  .toc-link
+    display: block
+    font-size: 0.9rem
+    color: var(--text-color)
+    opacity: 0.7
+    transition: opacity 0.2s ease
+
+    &:hover
+      opacity: 1
+      text-decoration: none
+
+  .is-active-link
+    opacity: 1
+    font-weight: bold
+    color: var(--link-color)
+
+  .toc-child
+    padding-left: 1rem
+
+// Hide TOC on smaller screens
+@media (max-width: 1024px)
+  .toc-aside
+    display: none

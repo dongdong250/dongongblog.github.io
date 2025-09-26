@@ -1,0 +1,27 @@
+<div class="post-layout">
+  <article class="post-content">
+    <header class="post-header">
+      <h1 class="article-title"><%= page.title %></h1>
+      <div class="article-meta">
+        <span class="article-date"><%= __('post.date') %>: <%= date(page.date, config.date_format) %></span>
+        <% if (page.author) { %>
+          <span class="article-author"> | <%= __('post.author') %>: <%= page.author %></span>
+        <% } %>
+      </div>
+    </header>
+    <div class="post-content-main">
+      <%- page.content %>
+    </div>
+  </article>
+
+  <% if (page.toc) { %>
+    <aside class="toc-aside">
+      <div class="toc-widget">
+        <h3 class="toc-title"><%= __('post.toc') %></h3>
+        <div class="toc-content">
+          <%- toc(page.content, { list_number: false }) %>
+        </div>
+      </div>
+    </aside>
+  <% } %>
+</div>

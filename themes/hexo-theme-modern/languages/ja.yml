@@ -1,0 +1,14 @@
+nav:
+  home: ホーム
+  archives: アーカイブ
+  about: 概要
+
+post:
+  read_more: 続きを読む
+  toc: 目次
+  author: 著者
+  date: 公開日
+
+footer:
+  powered_by: パワードバイ
+  theme: テーマ
